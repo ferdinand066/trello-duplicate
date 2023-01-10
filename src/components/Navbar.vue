@@ -14,21 +14,12 @@
               <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
             </DisclosureButton>
           </div>
-          <div class="flex-shrink-0 flex items-center">
-            <img
-              class="block lg:hidden h-8 w-auto"
-              src="/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
-            <img
-              class="hidden lg:block h-8 w-auto"
-              src="/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-              alt="Workflow"
-            />
+          <div class="flex-shrink-0 flex items-center text-2xl font-semibold italic">
+            Trello
           </div>
           <div class="hidden md:ml-6 md:flex md:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-            <a
+            <!-- <a
               href="#"
               class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
             >
@@ -44,24 +35,24 @@
               href="#"
               class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
             >
-              Projects
+              Boards
             </a>
             <a
               href="#"
               class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
             >
               Calendar
-            </a>
+            </a> -->
           </div>
         </div>
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <button
-              type="button"
+              type="button" @click="openNewBoardPopup = !openNewBoardPopup"
               class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <PlusIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-              <span>New Job</span>
+              <span>Insert Board</span>
             </button>
           </div>
           <div class="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
@@ -138,7 +129,7 @@
     <DisclosurePanel class="md:hidden">
       <div class="pt-2 pb-3 space-y-1">
         <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-        <a
+        <!-- <a
           href="#"
           class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6"
           >Dashboard</a
@@ -151,13 +142,13 @@
         <a
           href="#"
           class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6"
-          >Projects</a
+          >Boards</a
         >
         <a
           href="#"
           class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6"
           >Calendar</a
-        >
+        > -->
       </div>
       <div class="pt-4 pb-3 border-t border-gray-200">
         <div class="flex items-center px-4 sm:px-6">
@@ -180,7 +171,7 @@
           </button>
         </div>
         <div class="mt-3 space-y-1">
-          <a
+          <!-- <a
             href="#"
             class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 sm:px-6"
             >Your Profile</a
@@ -194,26 +185,28 @@
             href="#"
             class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 sm:px-6"
             >Sign out</a
-          >
+          > -->
         </div>
       </div>
     </DisclosurePanel>
   </Disclosure>
+  <CreateBoardPopup v-if="openNewBoardPopup" />
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
 import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
+Disclosure,
+DisclosureButton,
+DisclosurePanel,
+Menu,
+MenuButton,
+MenuItem,
+MenuItems
 } from "@headlessui/vue";
-import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { PlusIcon } from "@heroicons/vue/24/solid";
+import { ref } from "vue";
+import CreateBoardPopup from "./popup/CreateBoardPopup.vue";
 
 export default {
   components: {
@@ -228,12 +221,14 @@ export default {
     Bars3Icon,
     PlusIcon,
     XMarkIcon,
-  },
+    CreateBoardPopup
+},
   setup() {
     const open = ref(false);
-
+    const openNewBoardPopup = ref(false);
     return {
       open,
+      openNewBoardPopup
     };
   },
 };
