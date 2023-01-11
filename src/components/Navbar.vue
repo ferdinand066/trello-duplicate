@@ -55,6 +55,7 @@
               <span>Insert Board</span>
             </button>
           </div>
+          <AuthButton />
           <div class="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
             <button
               class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -207,6 +208,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import { ref } from "vue";
 import CreateBoardPopup from "./popup/CreateBoardPopup.vue";
+import AuthButton from "./auth/AuthButton.vue";
 
 export default {
   components: {
@@ -221,7 +223,8 @@ export default {
     Bars3Icon,
     PlusIcon,
     XMarkIcon,
-    CreateBoardPopup
+    CreateBoardPopup,
+    AuthButton
 },
   setup() {
     const open = ref(false);
