@@ -42,7 +42,7 @@
                                                         Board name
                                                     </label>
                                                     <div class="mt-1">
-                                                        <input type="text" v-model="state.boardName" id="board_name"
+                                                        <input type="text" v-model="state.name" id="board_name"
                                                             class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md" />
                                                     </div>
                                                 </div>
@@ -52,7 +52,7 @@
                                                         Description
                                                     </label>
                                                     <div class="mt-1">
-                                                        <textarea id="description" name="description" rows="4" v-model="state.boardDescription"
+                                                        <textarea id="description" name="description" rows="4" v-model="state.description"
                                                             class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md" />
                                                     </div>
                                                 </div>
@@ -79,7 +79,7 @@
                                                     <div class="mt-2 space-y-5">
                                                         <div class="relative flex items-start">
                                                             <div class="absolute flex items-center h-5">
-                                                                <input v-model="state.boardVisibility" id="privacy_public" name="privacy"
+                                                                <input v-model="state.visibility" id="privacy_public" name="privacy"
                                                                     aria-describedby="privacy_public_description"
                                                                     type="radio" value="public"
                                                                     class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
@@ -98,7 +98,7 @@
                                                         <div>
                                                             <div class="relative flex items-start">
                                                                 <div class="absolute flex items-center h-5">
-                                                                    <input v-model="state.boardVisibility" id="privacy_private-to-board" name="privacy"
+                                                                    <input v-model="state.visibility" id="privacy_private-to-board" name="privacy"
                                                                         aria-describedby="privacy_private-to-board_description"
                                                                         type="radio" value="restricted"
                                                                         class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
@@ -119,7 +119,7 @@
                                                         <div>
                                                             <div class="relative flex items-start">
                                                                 <div class="absolute flex items-center h-5">
-                                                                    <input v-model="state.boardVisibility" value="private" id="privacy_private" name="privacy"
+                                                                    <input v-model="state.visibility" value="private" id="privacy_private" name="privacy"
                                                                         aria-describedby="privacy_private-to-board_description"
                                                                         type="radio"
                                                                         class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
@@ -166,9 +166,11 @@
 import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid'
-import { reactive, ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import { reactive, ref } from 'vue'
+import BoardHandlers from '../../handlers/BoardHandlers'
+import { useBoardStore } from '../../stores/board-store'
 
 const team = [
     {
@@ -221,18 +223,18 @@ export default {
         XMarkIcon,
     },
     setup() {
-        const open = ref(true)
+        const open = ref(true);
 
         const state = reactive({
-            boardName: '',
-            boardDescription: '',
-            boardVisibility: ''
+            name: '',
+            description: '',
+            visibility: ''
         });
 
         const rules = {
-            boardName: { required },
-            boardDescription: { required },
-            boardVisibility: { required }
+            name: { required },
+            description: { required },
+            visibility: { required }
         };
 
         const v$ = useVuelidate(rules, state);
@@ -241,7 +243,16 @@ export default {
             const isFormCorrect = await v$.value.$validate();
 
             if (!isFormCorrect) return;
-            console.log(state);
+            const result = await BoardHandlers.createBoard(state);
+            if (!result) return;
+            
+            open.value = false;
+
+            const boardStore = useBoardStore();
+
+            const boardResult = await Promise.all([BoardHandlers.getBoards(), BoardHandlers.getCreatedBoards()]);
+            boardStore.activeBoards = boardResult[0];
+            boardStore.createdBoards = boardResult[1];
         }
 
         return {
