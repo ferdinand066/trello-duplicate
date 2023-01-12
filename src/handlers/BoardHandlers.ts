@@ -5,40 +5,59 @@ import { checkAuth } from "../utils/check-auth";
 const table = "boards";
 
 export default class BoardHandlers {
-    static getBoards = async () => {
-        const { data: board, error } = await supabase
-            .from(table)
-            .select(`*, users (
+  static getBoards = async () => {
+    const { data: board, error } = await supabase.from(table).select(`*, users (
                 name
             )`);
 
-        if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-        return board;
-    }
+    return board;
+  };
 
-    static getCreatedBoards = async () => {
-        const userId = checkAuth();
+  static getCreatedBoards = async () => {
+    const userId = checkAuth();
 
-        const { data: board, error } = await supabase
-            .from(table)
-            .select(`*, users (
+    const { data: board, error } = await supabase
+      .from(table)
+      .select(
+        `*, users (
                 name
-            )`)
-            .eq('user_id', userId);
+            )`
+      )
+      .eq("user_id", userId);
 
-        if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-        return board;
-    }
+    return board;
+  };
 
-    static createBoard = async (board: Board) => {
-        const userId = checkAuth();
+  static getOneBoardById = async (id: string) => {
+    const { data: board, error } = await supabase
+      .from(table)
+      .select(
+        `*, board_lists (
+                title
+            )`
+      )
+      .eq("id", id);
 
-        const { data, error } = await supabase.from(table).insert({...board, user_id: userId}).select();
-        if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-        return data[0];
-    }
+    return board[0];
+  };
+
+  static createBoard = async (board: Board) => {
+    const userId = checkAuth();
+
+    const { data, error } = await supabase
+      .from(table)
+      .insert({ ...board, user_id: userId })
+      .select();
+    if (error) throw new Error(error.message);
+
+    return data[0];
+  };
+
 
 }

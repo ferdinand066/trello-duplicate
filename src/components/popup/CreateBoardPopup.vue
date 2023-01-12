@@ -1,62 +1,91 @@
 <template>
-    <TransitionRoot as="template" :show="open">
-        <Dialog as="section" static class="fixed inset-0 overflow-hidden" @close="open = false" :open="open">
-            <div class="absolute inset-0 overflow-hidden">
-                <DialogOverlay class="absolute inset-0" />
+  <TransitionRoot as="template" :show="open">
+    <Dialog
+      as="section"
+      static
+      class="fixed inset-0 overflow-hidden"
+      @close="open = false"
+      :open="open"
+    >
+      <div class="absolute inset-0 overflow-hidden">
+        <DialogOverlay class="absolute inset-0 backdrop-blur-sm" />
 
-                <div class="fixed inset-y-0 pl-16 max-w-full right-0 flex">
-                    <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700"
-                        enter-from="translate-x-full" enter-to="translate-x-0"
-                        leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0"
-                        leave-to="translate-x-full">
-                        <div class="w-screen max-w-md">
-                            <form class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl" @submit.prevent="submitCreateBoardForm">
-                                <div class="flex-1 h-0 overflow-y-auto">
-                                    <div class="py-6 px-4 bg-indigo-700 sm:px-6">
-                                        <div class="flex items-center justify-between">
-                                            <DialogTitle class="text-lg font-medium text-white">
-                                                New Board
-                                            </DialogTitle>
-                                            <div class="ml-3 h-7 flex items-center">
-                                                <button type="button"
-                                                    class="bg-indigo-700 rounded-md text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                                                    @click="open = false">
-                                                    <span class="sr-only">Close panel</span>
-                                                    <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="mt-1">
-                                            <p class="text-sm text-indigo-300">
-                                                Get started by filling in the information below to create your new
-                                                board.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 flex flex-col justify-between">
-                                        <div class="px-4 divide-y divide-gray-200 sm:px-6">
-                                            <div class="space-y-6 pt-6 pb-5">
-                                                <div>
-                                                    <label for="board_name"
-                                                        class="block text-sm font-medium text-gray-900">
-                                                        Board name
-                                                    </label>
-                                                    <div class="mt-1">
-                                                        <input type="text" v-model="state.name" id="board_name"
-                                                            class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md" />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <label for="description"
-                                                        class="block text-sm font-medium text-gray-900">
-                                                        Description
-                                                    </label>
-                                                    <div class="mt-1">
-                                                        <textarea id="description" name="description" rows="4" v-model="state.description"
-                                                            class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md" />
-                                                    </div>
-                                                </div>
-                                                <!-- <div>
+        <div class="fixed inset-y-0 pl-16 max-w-full right-0 flex">
+          <TransitionChild
+            as="template"
+            enter="transform transition ease-in-out duration-500 sm:duration-700"
+            enter-from="translate-x-full"
+            enter-to="translate-x-0"
+            leave="transform transition ease-in-out duration-500 sm:duration-700"
+            leave-from="translate-x-0"
+            leave-to="translate-x-full"
+          >
+            <div class="w-screen max-w-md">
+              <form
+                class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl"
+                @submit.prevent="submitCreateBoardForm"
+              >
+                <div class="flex-1 h-0 overflow-y-auto">
+                  <div class="py-6 px-4 bg-indigo-700 sm:px-6">
+                    <div class="flex items-center justify-between">
+                      <DialogTitle class="text-lg font-medium text-white">
+                        New Board
+                      </DialogTitle>
+                      <div class="ml-3 h-7 flex items-center">
+                        <button
+                          type="button"
+                          class="bg-indigo-700 rounded-md text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                          @click="open = false"
+                        >
+                          <span class="sr-only">Close panel</span>
+                          <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mt-1">
+                      <p class="text-sm text-indigo-300">
+                        Get started by filling in the information below to
+                        create your new board.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex-1 flex flex-col justify-between">
+                    <div class="px-4 divide-y divide-gray-200 sm:px-6">
+                      <div class="space-y-6 pt-6 pb-5">
+                        <div>
+                          <label
+                            for="board_name"
+                            class="block text-sm font-medium text-gray-900"
+                          >
+                            Board name
+                          </label>
+                          <div class="mt-1">
+                            <input
+                              type="text"
+                              v-model="state.name"
+                              id="board_name"
+                              class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label
+                            for="description"
+                            class="block text-sm font-medium text-gray-900"
+                          >
+                            Description
+                          </label>
+                          <div class="mt-1">
+                            <textarea
+                              id="description"
+                              name="description"
+                              rows="4"
+                              v-model="state.description"
+                              class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                            />
+                          </div>
+                        </div>
+                        <!-- <div>
                           <h3 class="text-sm font-medium text-gray-900">
                             Team Members
                           </h3>
@@ -72,196 +101,234 @@
                             </div>
                           </div>
                         </div> -->
-                                                <fieldset>
-                                                    <legend class="text-sm font-medium text-gray-900">
-                                                        Privacy
-                                                    </legend>
-                                                    <div class="mt-2 space-y-5">
-                                                        <div class="relative flex items-start">
-                                                            <div class="absolute flex items-center h-5">
-                                                                <input v-model="state.visibility" id="privacy_public" name="privacy"
-                                                                    aria-describedby="privacy_public_description"
-                                                                    type="radio" value="public"
-                                                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                                            </div>
-                                                            <div class="pl-7 text-sm">
-                                                                <label for="privacy_public"
-                                                                    class="font-medium text-gray-900">
-                                                                    Public access
-                                                                </label>
-                                                                <p id="privacy_public_description"
-                                                                    class="text-gray-500">
-                                                                    Everyone with the link will see this board.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="relative flex items-start">
-                                                                <div class="absolute flex items-center h-5">
-                                                                    <input v-model="state.visibility" id="privacy_private-to-board" name="privacy"
-                                                                        aria-describedby="privacy_private-to-board_description"
-                                                                        type="radio" value="restricted"
-                                                                        class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                                                </div>
-                                                                <div class="pl-7 text-sm">
-                                                                    <label for="privacy_private-to-board"
-                                                                        class="font-medium text-gray-900">
-                                                                        Private to board members
-                                                                    </label>
-                                                                    <p id="privacy_private-to-board_description"
-                                                                        class="text-gray-500">
-                                                                        Only members of this board would be able to
-                                                                        access.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="relative flex items-start">
-                                                                <div class="absolute flex items-center h-5">
-                                                                    <input v-model="state.visibility" value="private" id="privacy_private" name="privacy"
-                                                                        aria-describedby="privacy_private-to-board_description"
-                                                                        type="radio"
-                                                                        class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                                                </div>
-                                                                <div class="pl-7 text-sm">
-                                                                    <label for="privacy_private"
-                                                                        class="font-medium text-gray-900">
-                                                                        Private to you
-                                                                    </label>
-                                                                    <p id="privacy_private_description"
-                                                                        class="text-gray-500">
-                                                                        You are the only one able to access this board.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <fieldset>
+                          <legend class="text-sm font-medium text-gray-900">
+                            Privacy
+                          </legend>
+                          <div class="mt-2 space-y-5">
+                            <div class="relative flex items-start">
+                              <div class="absolute flex items-center h-5">
+                                <input
+                                  v-model="state.visibility"
+                                  id="privacy_public"
+                                  name="privacy"
+                                  aria-describedby="privacy_public_description"
+                                  type="radio"
+                                  value="public"
+                                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                />
+                              </div>
+                              <div class="pl-7 text-sm">
+                                <label
+                                  for="privacy_public"
+                                  class="font-medium text-gray-900"
+                                >
+                                  Public access
+                                </label>
+                                <p
+                                  id="privacy_public_description"
+                                  class="text-gray-500"
+                                >
+                                  Everyone with the link will see this board.
+                                </p>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="relative flex items-start">
+                                <div class="absolute flex items-center h-5">
+                                  <input
+                                    v-model="state.visibility"
+                                    id="privacy_private-to-board"
+                                    name="privacy"
+                                    aria-describedby="privacy_private-to-board_description"
+                                    type="radio"
+                                    value="restricted"
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                  />
                                 </div>
-                                <div class="flex-shrink-0 px-4 py-4 flex justify-end">
-                                    <button type="button"
-                                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        @click="open = false">
-                                        Cancel
-                                    </button>
-                                    <button type="submit"
-                                        class="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Save
-                                    </button>
+                                <div class="pl-7 text-sm">
+                                  <label
+                                    for="privacy_private-to-board"
+                                    class="font-medium text-gray-900"
+                                  >
+                                    Private to board members
+                                  </label>
+                                  <p
+                                    id="privacy_private-to-board_description"
+                                    class="text-gray-500"
+                                  >
+                                    Only members of this board would be able to
+                                    access.
+                                  </p>
                                 </div>
-                            </form>
-                        </div>
-                    </TransitionChild>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="relative flex items-start">
+                                <div class="absolute flex items-center h-5">
+                                  <input
+                                    v-model="state.visibility"
+                                    value="private"
+                                    id="privacy_private"
+                                    name="privacy"
+                                    aria-describedby="privacy_private-to-board_description"
+                                    type="radio"
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                  />
+                                </div>
+                                <div class="pl-7 text-sm">
+                                  <label
+                                    for="privacy_private"
+                                    class="font-medium text-gray-900"
+                                  >
+                                    Private to you
+                                  </label>
+                                  <p
+                                    id="privacy_private_description"
+                                    class="text-gray-500"
+                                  >
+                                    You are the only one able to access this
+                                    board.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <div class="flex-shrink-0 px-4 py-4 flex justify-end">
+                  <button
+                    type="button"
+                    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    @click="open = false"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
-        </Dialog>
-    </TransitionRoot>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <script lang="ts">
-import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid'
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { reactive, ref } from 'vue'
-import BoardHandlers from '../../handlers/BoardHandlers'
-import { useBoardStore } from '../../stores/board-store'
+import {
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  LinkIcon,
+  PlusIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/vue/24/solid";
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import { reactive, ref } from "vue";
+import BoardHandlers from "../../handlers/BoardHandlers";
+import { useBoardStore } from "../../stores/board-store";
 
 const team = [
-    {
-        name: 'Tom Cook',
-        email: 'tomcook@example.com',
-        href: '#',
-        imageUrl:
-            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    {
-        name: 'Whitney Francis',
-        email: 'whitneyfrancis@example.com',
-        href: '#',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    {
-        name: 'Leonard Krasner',
-        email: 'leonardkrasner@example.com',
-        href: '#',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    {
-        name: 'Floyd Miles',
-        email: 'floydmiles@example.com',
-        href: '#',
-        imageUrl:
-            'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    {
-        name: 'Emily Selman',
-        email: 'emilyselman@example.com',
-        href: '#',
-        imageUrl:
-            'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-]
+  {
+    name: "Tom Cook",
+    email: "tomcook@example.com",
+    href: "#",
+    imageUrl:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Whitney Francis",
+    email: "whitneyfrancis@example.com",
+    href: "#",
+    imageUrl:
+      "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Leonard Krasner",
+    email: "leonardkrasner@example.com",
+    href: "#",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Floyd Miles",
+    email: "floydmiles@example.com",
+    href: "#",
+    imageUrl:
+      "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Emily Selman",
+    email: "emilyselman@example.com",
+    href: "#",
+    imageUrl:
+      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+];
 
 export default {
-    components: {
-        Dialog,
-        DialogOverlay,
-        DialogTitle,
-        TransitionChild,
-        TransitionRoot,
-        LinkIcon,
-        PlusIcon,
-        QuestionMarkCircleIcon,
-        XMarkIcon,
-    },
-    setup() {
-        const open = ref(true);
+  components: {
+    Dialog,
+    DialogOverlay,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+    LinkIcon,
+    PlusIcon,
+    QuestionMarkCircleIcon,
+    XMarkIcon,
+  },
+  setup() {
+    const open = ref(true);
 
-        const state = reactive({
-            name: '',
-            description: '',
-            visibility: ''
-        });
+    const state = reactive({
+      name: "",
+      description: "",
+      visibility: "",
+    });
 
-        const rules = {
-            name: { required },
-            description: { required },
-            visibility: { required }
-        };
+    const rules = {
+      name: { required },
+      description: { required },
+      visibility: { required },
+    };
 
-        const v$ = useVuelidate(rules, state);
+    const v$ = useVuelidate(rules, state);
 
-        const submitCreateBoardForm = async() => {
-            const isFormCorrect = await v$.value.$validate();
+    const submitCreateBoardForm = async () => {
+      const isFormCorrect = await v$.value.$validate();
 
-            if (!isFormCorrect) return;
-            const result = await BoardHandlers.createBoard(state);
-            if (!result) return;
-            
-            open.value = false;
+      if (!isFormCorrect) return;
+      const result = await BoardHandlers.createBoard(state);
+      if (!result) return;
 
-            const boardStore = useBoardStore();
+      open.value = false;
 
-            const boardResult = await Promise.all([BoardHandlers.getBoards(), BoardHandlers.getCreatedBoards()]);
-            boardStore.activeBoards = boardResult[0];
-            boardStore.createdBoards = boardResult[1];
-        }
+      await useBoardStore().fetchBoards();
+    };
 
-        return {
-            team,
-            open,
-            state,
-            v$,
-            submitCreateBoardForm
-        }
-    },
-}
+    return {
+      team,
+      open,
+      state,
+      v$,
+      submitCreateBoardForm,
+    };
+  },
+};
 </script>

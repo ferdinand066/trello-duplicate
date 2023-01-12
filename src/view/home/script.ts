@@ -11,14 +11,8 @@ export default ({
     const authStore = useAuthStore();
     const boardStore = useBoardStore();
     
-    const fetchData = async () => {
-      const result = await Promise.all([BoardHandlers.getBoards(), BoardHandlers.getCreatedBoards()]);
-      boardStore.activeBoards = result[0];
-      boardStore.createdBoards = result[1];
-    }
-    
     watch(authStore, () => {
-      if (authStore.id) fetchData();
+      if (authStore.id) boardStore.fetchBoards();
     }, { immediate: true});
 
     return {
